@@ -17,6 +17,10 @@ public class AñadirMusica extends javax.swing.JFrame {
      */
     public AñadirMusica() {
         initComponents();
+        setSize(525, 515);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
     }
 
     /**
@@ -34,54 +38,74 @@ public class AñadirMusica extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
 
         jLabel2.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel2.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Stencil", 1, 20)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(102, 255, 102));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nombre");
-        jLabel2.setOpaque(true);
         getContentPane().add(jLabel2);
-        jLabel2.setBounds(70, 40, 70, 20);
+        jLabel2.setBounds(60, 80, 120, 50);
 
-        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 1, true));
-        jTextField1.setOpaque(true);
+        jTextField1.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jTextField1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 4, true));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField1ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField1);
-        jTextField1.setBounds(150, 40, 170, 22);
+        jTextField1.setBounds(210, 80, 250, 50);
 
         jLabel3.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel3.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Stencil", 1, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(153, 255, 153));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Código");
         getContentPane().add(jLabel3);
-        jLabel3.setBounds(70, 90, 60, 13);
+        jLabel3.setBounds(60, 160, 120, 50);
 
         jLabel4.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel4.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Stencil", 1, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(153, 255, 153));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("Precio");
         getContentPane().add(jLabel4);
-        jLabel4.setBounds(70, 120, 60, 13);
+        jLabel4.setBounds(60, 240, 120, 50);
 
-        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 255, 153), 1, true));
+        jTextField2.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jTextField2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 4, true));
         jTextField2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jTextField2ActionPerformed(evt);
             }
         });
         getContentPane().add(jTextField2);
-        jTextField2.setBounds(150, 80, 170, 20);
+        jTextField2.setBounds(210, 160, 250, 50);
 
-        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(153, 255, 153), 1, true));
+        jTextField3.setFont(new java.awt.Font("Arial", 0, 16)); // NOI18N
+        jTextField3.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 4, true));
         getContentPane().add(jTextField3);
-        jTextField3.setBounds(150, 110, 170, 20);
+        jTextField3.setBounds(210, 240, 250, 50);
+
+        jButton1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jButton1.setText("Volver");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButton1);
+        jButton1.setBounds(350, 410, 120, 30);
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/elegir.png"))); // NOI18N
+        getContentPane().add(jLabel1);
+        jLabel1.setBounds(0, -40, 530, 530);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -93,6 +117,12 @@ public class AñadirMusica extends javax.swing.JFrame {
     private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // Volver al menú principal
+        new Menu().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -120,6 +150,8 @@ public class AñadirMusica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
