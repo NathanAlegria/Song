@@ -34,7 +34,6 @@ public class AñadirMusica extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(null);
@@ -84,13 +83,6 @@ public class AñadirMusica extends javax.swing.JFrame {
         getContentPane().add(jTextField3);
         jTextField3.setBounds(150, 110, 170, 20);
 
-        jLabel1.setBackground(new java.awt.Color(0, 0, 0));
-        jLabel1.setFont(new java.awt.Font("Stencil", 0, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 255, 153));
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\Nathan\\Pictures\\Labs\\Captura de pantalla 2025-06-20 085511.png")); // NOI18N
-        getContentPane().add(jLabel1);
-        jLabel1.setBounds(0, 0, 521, 514);
-
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
@@ -128,7 +120,6 @@ public class AñadirMusica extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
