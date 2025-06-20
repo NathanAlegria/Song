@@ -4,6 +4,10 @@
  */
 package song;
 
+import javax.swing.*;
+import java.awt.*;
+import java.io.File;
+
 /**
  *
  * @author Nathan
@@ -11,6 +15,8 @@ package song;
 public class AñadirMusica extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AñadirMusica.class.getName());
+    private static PlayList playList = new PlayList(100); // Instancia estática para mantener las canciones
+    private ImageIcon imagenSeleccionada = null;
 
     /**
      * Creates new form AñadirMusica
@@ -38,6 +44,9 @@ public class AñadirMusica extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jTextField3 = new javax.swing.JTextField();
+        jButtonSeleccionarImagen = new javax.swing.JButton();
+        jLabelImagen = new javax.swing.JLabel();
+        jButtonAgregar = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
 
@@ -93,6 +102,34 @@ public class AñadirMusica extends javax.swing.JFrame {
         getContentPane().add(jTextField3);
         jTextField3.setBounds(210, 240, 250, 50);
 
+        jButtonSeleccionarImagen.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
+        jButtonSeleccionarImagen.setText("Seleccionar Imagen");
+        jButtonSeleccionarImagen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonSeleccionarImagenActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonSeleccionarImagen);
+        jButtonSeleccionarImagen.setBounds(20, 320, 180, 40);
+
+        jLabelImagen.setBackground(new java.awt.Color(204, 204, 204));
+        jLabelImagen.setFont(new java.awt.Font("Arial", 0, 12)); // NOI18N
+        jLabelImagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelImagen.setText("Sin imagen");
+        jLabelImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(102, 255, 102), 2, true));
+        getContentPane().add(jLabelImagen);
+        jLabelImagen.setBounds(230, 320, 100, 100);
+
+        jButtonAgregar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jButtonAgregar.setText("Agregar");
+        jButtonAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonAgregarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonAgregar);
+        jButtonAgregar.setBounds(360, 330, 120, 40);
+
         jButton1.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
         jButton1.setText("Volver");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
@@ -101,7 +138,7 @@ public class AñadirMusica extends javax.swing.JFrame {
             }
         });
         getContentPane().add(jButton1);
-        jButton1.setBounds(350, 410, 120, 30);
+        jButton1.setBounds(360, 390, 120, 40);
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/elegir.png"))); // NOI18N
         getContentPane().add(jLabel1);
@@ -118,11 +155,96 @@ public class AñadirMusica extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2ActionPerformed
 
+    private void jButtonSeleccionarImagenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSeleccionarImagenActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter(
+            "Archivos de imagen", "jpg", "jpeg", "png", "gif", "bmp"));
+        
+        int result = fileChooser.showOpenDialog(this);
+        if (result == JFileChooser.APPROVE_OPTION) {
+            File selectedFile = fileChooser.getSelectedFile();
+            imagenSeleccionada = new ImageIcon(selectedFile.getAbsolutePath());
+            
+            // Escalar la imagen para que se vea bien en el label
+            Image img = imagenSeleccionada.getImage();
+            Image scaledImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            ImageIcon scaledIcon = new ImageIcon(scaledImg);
+            
+            jLabelImagen.setIcon(scaledIcon);
+            jLabelImagen.setText(""); // Quitar el texto "Sin imagen"
+        }
+    }//GEN-LAST:event_jButtonSeleccionarImagenActionPerformed
+
+    private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
+        // Obtener datos de los campos
+        String codigoText = jTextField2.getText();
+        String nombreText = jTextField1.getText();
+        String precioText = jTextField3.getText();
+        
+        // Validar campos usando la clase Ingreso
+        if (!Ingreso.validarCamposCancion(codigoText, nombreText, precioText)) {
+            // Mostrar errores específicos
+            if (!Ingreso.validarTextoNoVacio(codigoText) || 
+                !Ingreso.validarTextoNoVacio(nombreText) || 
+                !Ingreso.validarTextoNoVacio(precioText)) {
+                Ingreso.mostrarErrorCamposVacios();
+                return;
+            }
+            
+            // Verificar errores específicos
+            if (Ingreso.obtenerCodigo(codigoText) == -1) {
+                Ingreso.mostrarErrorCodigoInvalido();
+                return;
+            }
+            
+            if (Ingreso.obtenerNombre(nombreText) == null) {
+                Ingreso.mostrarErrorNombreInvalido();
+                return;
+            }
+            
+            if (Ingreso.obtenerPrecio(precioText) == -1.0) {
+                Ingreso.mostrarErrorPrecioInvalido();
+                return;
+            }
+            
+            return;
+        }
+        
+        // Obtener datos validados
+        int codigo = Ingreso.obtenerCodigo(codigoText);
+        String nombre = Ingreso.obtenerNombre(nombreText);
+        double precio = Ingreso.obtenerPrecio(precioText);
+        
+        // Intentar agregar la canción
+        boolean agregado = playList.addSong(codigo, nombre, precio, imagenSeleccionada);
+        
+        if (agregado) {
+            Ingreso.mostrarExitoCancionAgregada();
+            limpiarCampos();
+        } else {
+            Ingreso.mostrarErrorCancionNoAgregada();
+        }
+    }//GEN-LAST:event_jButtonAgregarActionPerformed
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // Volver al menú principal
         new Menu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
+    
+    private void limpiarCampos() {
+        jTextField1.setText("");
+        jTextField2.setText("");
+        jTextField3.setText("");
+        jLabelImagen.setIcon(null);
+        jLabelImagen.setText("Sin imagen");
+        imagenSeleccionada = null;
+    }
+    
+    // Método estático para obtener la instancia de PlayList
+    public static PlayList getPlayList() {
+        return playList;
+    }
 
     /**
      * @param args the command line arguments
@@ -151,10 +273,13 @@ public class AñadirMusica extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButtonAgregar;
+    private javax.swing.JButton jButtonSeleccionarImagen;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabelImagen;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField3;

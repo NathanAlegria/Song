@@ -4,6 +4,9 @@
  */
 package song;
 
+import javax.swing.*;
+import java.awt.*;
+
 /**
  *
  * @author Nathan
@@ -11,15 +14,20 @@ package song;
 public class Reproductor extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Reproductor.class.getName());
+    
+    // Variable para el rating seleccionado
+    private int ratingSeleccionado = 0;
 
     /**
      * Creates new form Reproductor
      */
     public Reproductor() {
         initComponents();
-        initComponents();
         setSize(900, 650);
-        setLocationRelativeTo(this);
+        setLocationRelativeTo(null);
+        setResizable(false);
+        configurarPanelComentarios();
+        cargarCanciones();
     }
 
     /**
@@ -31,25 +39,428 @@ public class Reproductor extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        jLabelTitulo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jPanelCanciones = new javax.swing.JPanel();
+        jButtonActualizar = new javax.swing.JButton();
+        jButtonVolver = new javax.swing.JButton();
+        panelcomentarios = new javax.swing.JPanel();
+        jLabelTituloComentarios = new javax.swing.JLabel();
+        jLabelSeleccionar = new javax.swing.JLabel();
+        cbCanciones = new javax.swing.JComboBox<>();
+        jLabelComentario = new javax.swing.JLabel();
+        txtComentario = new javax.swing.JTextArea();
+        jLabelRating = new javax.swing.JLabel();
+        btnRating1 = new javax.swing.JButton();
+        btnRating2 = new javax.swing.JButton();
+        btnRating3 = new javax.swing.JButton();
+        btnRating4 = new javax.swing.JButton();
+        btnRating5 = new javax.swing.JButton();
+        btnEnviar = new javax.swing.JButton();
+        jLabelComentarios = new javax.swing.JLabel();
+        listaComentarios = new javax.swing.JTextArea();
+        jLabelFondo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Reproductor - Lista de Canciones");
+        getContentPane().setLayout(null);
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/reporductor.png"))); // NOI18N
+        jLabelTitulo.setFont(new java.awt.Font("Stencil", 1, 24)); // NOI18N
+        jLabelTitulo.setForeground(new java.awt.Color(255, 255, 255));
+        jLabelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabelTitulo.setText("REPRODUCTOR");
+        getContentPane().add(jLabelTitulo);
+        jLabelTitulo.setBounds(50, 20, 800, 40);
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1)
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
+        jPanelCanciones.setBackground(new java.awt.Color(64, 64, 64));
+        jPanelCanciones.setLayout(new javax.swing.BoxLayout(jPanelCanciones, javax.swing.BoxLayout.Y_AXIS));
+        jScrollPane1.setViewportView(jPanelCanciones);
+
+        getContentPane().add(jScrollPane1);
+        jScrollPane1.setBounds(270, 80, 580, 450);
+
+        jButtonActualizar.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jButtonActualizar.setText("Actualizar Lista");
+        jButtonActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonActualizarActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonActualizar);
+        jButtonActualizar.setBounds(50, 550, 200, 40);
+
+        jButtonVolver.setFont(new java.awt.Font("Arial", 1, 16)); // NOI18N
+        jButtonVolver.setText("Volver al Menú");
+        jButtonVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonVolverActionPerformed(evt);
+            }
+        });
+        getContentPane().add(jButtonVolver);
+        jButtonVolver.setBounds(650, 550, 200, 40);
+        
+        panelcomentarios.setBackground(new java.awt.Color(50, 50, 50));
+        panelcomentarios.setLayout(null);
+        
+        jLabelTituloComentarios.setText("COMENTARIOS Y RATINGS");
+        jLabelTituloComentarios.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        jLabelTituloComentarios.setForeground(new java.awt.Color(102, 255, 102));
+        jLabelTituloComentarios.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        panelcomentarios.add(jLabelTituloComentarios);
+        jLabelTituloComentarios.setBounds(10, 10, 190, 20);
+        
+        jLabelSeleccionar.setText("Seleccionar canción:");
+        jLabelSeleccionar.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabelSeleccionar.setForeground(new java.awt.Color(255, 255, 255));
+        panelcomentarios.add(jLabelSeleccionar);
+        jLabelSeleccionar.setBounds(10, 35, 150, 20);
+        
+        cbCanciones.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        cbCanciones.setBackground(new java.awt.Color(70, 70, 70));
+        cbCanciones.setForeground(new java.awt.Color(255, 255, 255));
+        cbCanciones.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbCancionesActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(cbCanciones);
+        cbCanciones.setBounds(10, 55, 190, 25);
+        
+        jLabelComentario.setText("Comentario:");
+        jLabelComentario.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabelComentario.setForeground(new java.awt.Color(255, 255, 255));
+        panelcomentarios.add(jLabelComentario);
+        jLabelComentario.setBounds(10, 90, 100, 20);
+        
+        txtComentario.setFont(new java.awt.Font("Arial", 0, 10)); // NOI18N
+        txtComentario.setBackground(new java.awt.Color(60, 60, 60));
+        txtComentario.setForeground(new java.awt.Color(255, 255, 255));
+        panelcomentarios.add(txtComentario);
+        txtComentario.setBounds(10, 110, 190, 50);
+        
+        jLabelRating.setText("Rating (1-5):");
+        jLabelRating.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabelRating.setForeground(new java.awt.Color(255, 255, 255));
+        panelcomentarios.add(jLabelRating);
+        jLabelRating.setBounds(10, 170, 100, 20);
+        
+        btnRating1.setText("1");
+        btnRating1.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRating1.setBackground(new java.awt.Color(70, 70, 70));
+        btnRating1.setForeground(new java.awt.Color(255, 255, 255));
+        btnRating1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRating1ActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnRating1);
+        btnRating1.setBounds(10, 195, 30, 25);
+        
+        btnRating2.setText("2");
+        btnRating2.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRating2.setBackground(new java.awt.Color(70, 70, 70));
+        btnRating2.setForeground(new java.awt.Color(255, 255, 255));
+        btnRating2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRating2ActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnRating2);
+        btnRating2.setBounds(45, 195, 30, 25);
+        
+        btnRating3.setText("3");
+        btnRating3.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRating3.setBackground(new java.awt.Color(70, 70, 70));
+        btnRating3.setForeground(new java.awt.Color(255, 255, 255));
+        btnRating3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRating3ActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnRating3);
+        btnRating3.setBounds(80, 195, 30, 25);
+        
+        btnRating4.setText("4");
+        btnRating4.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRating4.setBackground(new java.awt.Color(70, 70, 70));
+        btnRating4.setForeground(new java.awt.Color(255, 255, 255));
+        btnRating4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRating4ActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnRating4);
+        btnRating4.setBounds(115, 195, 30, 25);
+        
+        btnRating5.setText("5");
+        btnRating5.setFont(new java.awt.Font("Arial", 1, 12)); // NOI18N
+        btnRating5.setBackground(new java.awt.Color(70, 70, 70));
+        btnRating5.setForeground(new java.awt.Color(255, 255, 255));
+        btnRating5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRating5ActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnRating5);
+        btnRating5.setBounds(150, 195, 30, 25);
+        
+        btnEnviar.setText("Enviar");
+        btnEnviar.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        btnEnviar.setBackground(new java.awt.Color(102, 255, 102));
+        btnEnviar.setForeground(new java.awt.Color(0, 0, 0));
+        btnEnviar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEnviarActionPerformed(evt);
+            }
+        });
+        panelcomentarios.add(btnEnviar);
+        btnEnviar.setBounds(10, 230, 190, 25);
+        
+        jLabelComentarios.setText("Comentarios:");
+        jLabelComentarios.setFont(new java.awt.Font("Arial", 1, 11)); // NOI18N
+        jLabelComentarios.setForeground(new java.awt.Color(255, 255, 255));
+        panelcomentarios.add(jLabelComentarios);
+        jLabelComentarios.setBounds(10, 265, 180, 20);
+        
+        listaComentarios.setFont(new java.awt.Font("Arial", 0, 9)); // NOI18N
+        listaComentarios.setBackground(new java.awt.Color(40, 40, 40));
+        listaComentarios.setForeground(new java.awt.Color(255, 255, 255));
+        listaComentarios.setEditable(false);
+        panelcomentarios.add(listaComentarios);
+        listaComentarios.setBounds(10, 285, 190, 155);
+        
+        getContentPane().add(panelcomentarios);
+        panelcomentarios.setBounds(30, 80, 210, 450);
+
+        jLabelFondo.setBackground(new java.awt.Color(32, 32, 32));
+        jLabelFondo.setOpaque(true);
+        getContentPane().add(jLabelFondo);
+        jLabelFondo.setBounds(0, 0, 900, 650);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonActualizarActionPerformed
+        cargarCanciones();
+    }//GEN-LAST:event_jButtonActualizarActionPerformed
+
+    private void jButtonVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVolverActionPerformed
+        new Menu().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jButtonVolverActionPerformed
+    
+    // Métodos de acción para los botones de rating (deben ser conectados en el JFrame)
+    private void btnRating1ActionPerformed(java.awt.event.ActionEvent evt) {
+        seleccionarRating(1);
+    }
+    
+    private void btnRating2ActionPerformed(java.awt.event.ActionEvent evt) {
+        seleccionarRating(2);
+    }
+    
+    private void btnRating3ActionPerformed(java.awt.event.ActionEvent evt) {
+        seleccionarRating(3);
+    }
+    
+    private void btnRating4ActionPerformed(java.awt.event.ActionEvent evt) {
+        seleccionarRating(4);
+    }
+    
+    private void btnRating5ActionPerformed(java.awt.event.ActionEvent evt) {
+        seleccionarRating(5);
+    }
+    
+    private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {
+        enviarComentario();
+    }
+    
+    private void cbCancionesActionPerformed(java.awt.event.ActionEvent evt) {
+        actualizarComentarios();
+    }
+    
+
+
+    /**
+     * Carga y muestra todas las canciones del PlayList
+     */
+    private void cargarCanciones() {
+        jPanelCanciones.removeAll();
+        
+        PlayList playList = AñadirMusica.getPlayList();
+        Song[] canciones = playList.getAllSongs();
+        
+        if (canciones.length == 0) {
+            JLabel lblVacio = new JLabel("No hay canciones agregadas");
+            lblVacio.setFont(new Font("Arial", Font.ITALIC, 18));
+            lblVacio.setForeground(Color.WHITE);
+            lblVacio.setHorizontalAlignment(SwingConstants.CENTER);
+            lblVacio.setBounds(10, 200, 560, 30);
+            jPanelCanciones.add(lblVacio);
+        } else {
+            int y = 10;
+            for (int i = 0; i < canciones.length && i < 3; i++) { // Mostrar máximo 3 canciones
+                JPanel panelCancion = crearPanelCancion(canciones[i]);
+                panelCancion.setBounds(10, y, 560, 120);
+                jPanelCanciones.add(panelCancion);
+                y += 140; // Espaciado entre paneles
+            }
+        }
+        
+        jPanelCanciones.revalidate();
+        jPanelCanciones.repaint();
+    }
+    
+    /**
+     * Crea un panel individual para mostrar una canción
+     */
+    private JPanel crearPanelCancion(Song cancion) {
+        JPanel panel = new JPanel();
+        panel.setLayout(null);
+        panel.setBackground(new Color(80, 80, 80));
+        panel.setBorder(BorderFactory.createLineBorder(new Color(102, 255, 102), 2));
+        
+        // Imagen del disco
+        JLabel lblImagen = new JLabel();
+        lblImagen.setBounds(10, 10, 100, 100);
+        lblImagen.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+        
+        if (cancion.getImagenDisco() != null) {
+            Image img = cancion.getImagenDisco().getImage();
+            Image scaledImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+            lblImagen.setIcon(new ImageIcon(scaledImg));
+        } else {
+            lblImagen.setBackground(Color.GRAY);
+            lblImagen.setOpaque(true);
+            lblImagen.setText("Sin imagen");
+            lblImagen.setHorizontalAlignment(SwingConstants.CENTER);
+            lblImagen.setFont(new Font("Arial", Font.PLAIN, 10));
+        }
+        
+        // Información de la canción
+        JLabel lblCodigo = new JLabel("Código: " + cancion.getCodigo());
+        lblCodigo.setBounds(130, 20, 200, 20);
+        lblCodigo.setFont(new Font("Arial", Font.BOLD, 14));
+        lblCodigo.setForeground(new Color(102, 255, 102));
+        
+        JLabel lblNombre = new JLabel("Nombre: " + cancion.getNombre());
+        lblNombre.setBounds(130, 45, 400, 20);
+        lblNombre.setFont(new Font("Arial", Font.BOLD, 16));
+        lblNombre.setForeground(Color.WHITE);
+        
+        JLabel lblPrecio = new JLabel("Precio: $" + String.format("%.2f", cancion.getPrecio()));
+        lblPrecio.setBounds(130, 70, 200, 20);
+        lblPrecio.setFont(new Font("Arial", Font.PLAIN, 14));
+        lblPrecio.setForeground(Color.YELLOW);
+        
+        // Agregar componentes al panel
+        panel.add(lblImagen);
+        panel.add(lblCodigo);
+        panel.add(lblNombre);
+        panel.add(lblPrecio);
+        
+        return panel;
+    }
+    
+    /**
+     * Configura el panel de comentarios usando componentes ya establecidos en el JFrame
+     */
+    private void configurarPanelComentarios() {
+        // Los componentes ya están definidos en el archivo .form
+        // Solo cargar datos iniciales si los componentes existen
+        cargarCancionesEnCombo();
+    }
+    
+    /**
+     * Carga las canciones en el combo box (usando componentes del JFrame)
+     */
+    private void cargarCancionesEnCombo() {
+        if (cbCanciones != null) {
+            cbCanciones.removeAllItems();
+            Song[] canciones = AñadirMusica.getPlayList().getAllSongs();
+            
+            for (int i = 0; i < canciones.length; i++) {
+                cbCanciones.addItem(canciones[i]);
+            }
+            
+            if (canciones.length > 0) {
+                actualizarComentarios();
+            }
+        }
+    }
+    
+    /**
+     * Selecciona un rating y actualiza la apariencia de los botones
+     */
+    private void seleccionarRating(int rating) {
+        ratingSeleccionado = rating;
+        
+        // Resetear todos los botones
+        if (btnRating1 != null) btnRating1.setBackground(new Color(70, 70, 70));
+        if (btnRating2 != null) btnRating2.setBackground(new Color(70, 70, 70));
+        if (btnRating3 != null) btnRating3.setBackground(new Color(70, 70, 70));
+        if (btnRating4 != null) btnRating4.setBackground(new Color(70, 70, 70));
+        if (btnRating5 != null) btnRating5.setBackground(new Color(70, 70, 70));
+        
+        // Marcar el botón seleccionado
+        switch (rating) {
+            case 1: if (btnRating1 != null) btnRating1.setBackground(new Color(102, 255, 102)); break;
+            case 2: if (btnRating2 != null) btnRating2.setBackground(new Color(102, 255, 102)); break;
+            case 3: if (btnRating3 != null) btnRating3.setBackground(new Color(102, 255, 102)); break;
+            case 4: if (btnRating4 != null) btnRating4.setBackground(new Color(102, 255, 102)); break;
+            case 5: if (btnRating5 != null) btnRating5.setBackground(new Color(102, 255, 102)); break;
+        }
+    }
+    
+    /**
+     * Envía el comentario usando los componentes del JFrame
+     */
+    private void enviarComentario() {
+        if (cbCanciones == null || txtComentario == null) return;
+        
+        Song cancionSeleccionada = (Song) cbCanciones.getSelectedItem();
+        String comentario = txtComentario.getText().trim();
+        
+        // Validaciones básicas
+        if (cancionSeleccionada == null || comentario.isEmpty() || ratingSeleccionado == 0) {
+            return;
+        }
+        
+        // Agregar comentario
+        boolean agregado = AñadirMusica.getPlayList().addComentario(cancionSeleccionada.getCodigo(), comentario, ratingSeleccionado);
+        
+        if (agregado) {
+            txtComentario.setText("");
+            ratingSeleccionado = 0;
+            seleccionarRating(0); // Resetear botones
+            actualizarComentarios();
+            cargarCanciones();
+        }
+    }
+    
+    /**
+     * Actualiza la lista de comentarios para la canción seleccionada
+     */
+    private void actualizarComentarios() {
+        if (cbCanciones == null || listaComentarios == null) return;
+        
+        Song cancion = (Song) cbCanciones.getSelectedItem();
+        StringBuilder texto = new StringBuilder();
+        
+        if (cancion != null) {
+            Song.Comentario[] comentarios = cancion.getComentarios();
+            int totalComentarios = cancion.getTotalComentarios();
+            
+            if (totalComentarios == 0) {
+                texto.append("No hay comentarios");
+            } else {
+                for (int i = 0; i < totalComentarios; i++) {
+                    texto.append(comentarios[i].toString()).append("\n");
+                }
+            }
+        }
+        
+        listaComentarios.setText(texto.toString());
+    }
 
     /**
      * @param args the command line arguments
@@ -77,6 +488,26 @@ public class Reproductor extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton btnEnviar;
+    private javax.swing.JButton btnRating1;
+    private javax.swing.JButton btnRating2;
+    private javax.swing.JButton btnRating3;
+    private javax.swing.JButton btnRating4;
+    private javax.swing.JButton btnRating5;
+    private javax.swing.JComboBox<Song> cbCanciones;
+    private javax.swing.JButton jButtonActualizar;
+    private javax.swing.JButton jButtonVolver;
+    private javax.swing.JLabel jLabelComentario;
+    private javax.swing.JLabel jLabelComentarios;
+    private javax.swing.JLabel jLabelFondo;
+    private javax.swing.JLabel jLabelRating;
+    private javax.swing.JLabel jLabelSeleccionar;
+    private javax.swing.JLabel jLabelTitulo;
+    private javax.swing.JLabel jLabelTituloComentarios;
+    private javax.swing.JPanel jPanelCanciones;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextArea listaComentarios;
+    private javax.swing.JPanel panelcomentarios;
+    private javax.swing.JTextArea txtComentario;
     // End of variables declaration//GEN-END:variables
 }
