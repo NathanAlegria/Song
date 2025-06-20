@@ -15,12 +15,9 @@ import java.io.File;
 public class AñadirMusica extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(AñadirMusica.class.getName());
-    private static PlayList playList = new PlayList(100); // Instancia estática para mantener las canciones
+    private static PlayList playList = new PlayList(100); 
     private ImageIcon imagenSeleccionada = null;
 
-    /**
-     * Creates new form AñadirMusica
-     */
     public AñadirMusica() {
         initComponents();
         setSize(525, 515);
@@ -165,25 +162,23 @@ public class AñadirMusica extends javax.swing.JFrame {
             File selectedFile = fileChooser.getSelectedFile();
             imagenSeleccionada = new ImageIcon(selectedFile.getAbsolutePath());
             
-            // Escalar la imagen para que se vea bien en el label
             Image img = imagenSeleccionada.getImage();
             Image scaledImg = img.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
             ImageIcon scaledIcon = new ImageIcon(scaledImg);
             
             jLabelImagen.setIcon(scaledIcon);
-            jLabelImagen.setText(""); // Quitar el texto "Sin imagen"
+            jLabelImagen.setText(""); 
         }
     }//GEN-LAST:event_jButtonSeleccionarImagenActionPerformed
 
     private void jButtonAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAgregarActionPerformed
-        // Obtener datos de los campos
+        
         String codigoText = jTextField2.getText();
         String nombreText = jTextField1.getText();
         String precioText = jTextField3.getText();
         
-        // Validar campos usando la clase Ingreso
         if (!Ingreso.validarCamposCancion(codigoText, nombreText, precioText)) {
-            // Mostrar errores específicos
+           
             if (!Ingreso.validarTextoNoVacio(codigoText) || 
                 !Ingreso.validarTextoNoVacio(nombreText) || 
                 !Ingreso.validarTextoNoVacio(precioText)) {
@@ -191,7 +186,7 @@ public class AñadirMusica extends javax.swing.JFrame {
                 return;
             }
             
-            // Verificar errores específicos
+           
             if (Ingreso.obtenerCodigo(codigoText) == -1) {
                 Ingreso.mostrarErrorCodigoInvalido();
                 return;
@@ -210,12 +205,12 @@ public class AñadirMusica extends javax.swing.JFrame {
             return;
         }
         
-        // Obtener datos validados
+       
         int codigo = Ingreso.obtenerCodigo(codigoText);
         String nombre = Ingreso.obtenerNombre(nombreText);
         double precio = Ingreso.obtenerPrecio(precioText);
         
-        // Intentar agregar la canción
+        
         boolean agregado = playList.addSong(codigo, nombre, precio, imagenSeleccionada);
         
         if (agregado) {
@@ -227,7 +222,7 @@ public class AñadirMusica extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonAgregarActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // Volver al menú principal
+       
         new Menu().setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -241,7 +236,7 @@ public class AñadirMusica extends javax.swing.JFrame {
         imagenSeleccionada = null;
     }
     
-    // Método estático para obtener la instancia de PlayList
+    
     public static PlayList getPlayList() {
         return playList;
     }

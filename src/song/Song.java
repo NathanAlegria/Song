@@ -12,17 +12,15 @@ import javax.swing.ImageIcon;
  */
 public class Song {
     
-    // Atributos privados
     private int codigo;
     private String nombre;
     private double precio;
     private int sumaEstrellas;
     private int totalReviews;
     private ImageIcon imagenDisco;
-    private Comentario[] comentarios; // Array para comentarios
-    private int totalComentarios; // Contador de comentarios
+    private Comentario[] comentarios; 
+    private int totalComentarios;
     
-    // Constructor
     public Song(int codigo, String nombre, double precio, ImageIcon imagenDisco) {
         this.codigo = codigo;
         this.nombre = nombre;
@@ -30,7 +28,7 @@ public class Song {
         this.imagenDisco = imagenDisco;
         this.sumaEstrellas = 0;
         this.totalReviews = 0;
-        this.comentarios = new Comentario[50]; // Array fijo de 50 comentarios
+        this.comentarios = new Comentario[50];
         this.totalComentarios = 0;
     }
     

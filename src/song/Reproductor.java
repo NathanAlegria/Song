@@ -15,12 +15,10 @@ public class Reproductor extends javax.swing.JFrame {
     
     private static final java.util.logging.Logger logger = java.util.logging.Logger.getLogger(Reproductor.class.getName());
     
-    // Variable para el rating seleccionado
+  
     private int ratingSeleccionado = 0;
 
-    /**
-     * Creates new form Reproductor
-     */
+    
     public Reproductor() {
         initComponents();
         setSize(900, 650);
@@ -249,7 +247,7 @@ public class Reproductor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButtonVolverActionPerformed
     
-    // Métodos de acción para los botones de rating (deben ser conectados en el JFrame)
+    
     private void btnRating1ActionPerformed(java.awt.event.ActionEvent evt) {
         seleccionarRating(1);
     }
@@ -278,11 +276,6 @@ public class Reproductor extends javax.swing.JFrame {
         actualizarComentarios();
     }
     
-
-
-    /**
-     * Carga y muestra todas las canciones del PlayList
-     */
     private void cargarCanciones() {
         jPanelCanciones.removeAll();
         
@@ -298,11 +291,11 @@ public class Reproductor extends javax.swing.JFrame {
             jPanelCanciones.add(lblVacio);
         } else {
             int y = 10;
-            for (int i = 0; i < canciones.length && i < 3; i++) { // Mostrar máximo 3 canciones
+            for (int i = 0; i < canciones.length && i < 3; i++) { 
                 JPanel panelCancion = crearPanelCancion(canciones[i]);
                 panelCancion.setBounds(10, y, 560, 120);
                 jPanelCanciones.add(panelCancion);
-                y += 140; // Espaciado entre paneles
+                y += 140; 
             }
         }
         
@@ -310,9 +303,6 @@ public class Reproductor extends javax.swing.JFrame {
         jPanelCanciones.repaint();
     }
     
-    /**
-     * Crea un panel individual para mostrar una canción
-     */
     private JPanel crearPanelCancion(Song cancion) {
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -352,7 +342,6 @@ public class Reproductor extends javax.swing.JFrame {
         lblPrecio.setFont(new Font("Arial", Font.PLAIN, 14));
         lblPrecio.setForeground(Color.YELLOW);
         
-        // Agregar componentes al panel
         panel.add(lblImagen);
         panel.add(lblCodigo);
         panel.add(lblNombre);
@@ -361,18 +350,10 @@ public class Reproductor extends javax.swing.JFrame {
         return panel;
     }
     
-    /**
-     * Configura el panel de comentarios usando componentes ya establecidos en el JFrame
-     */
     private void configurarPanelComentarios() {
-        // Los componentes ya están definidos en el archivo .form
-        // Solo cargar datos iniciales si los componentes existen
         cargarCancionesEnCombo();
     }
     
-    /**
-     * Carga las canciones en el combo box (usando componentes del JFrame)
-     */
     private void cargarCancionesEnCombo() {
         if (cbCanciones != null) {
             cbCanciones.removeAllItems();
@@ -388,20 +369,15 @@ public class Reproductor extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * Selecciona un rating y actualiza la apariencia de los botones
-     */
     private void seleccionarRating(int rating) {
         ratingSeleccionado = rating;
         
-        // Resetear todos los botones
         if (btnRating1 != null) btnRating1.setBackground(new Color(70, 70, 70));
         if (btnRating2 != null) btnRating2.setBackground(new Color(70, 70, 70));
         if (btnRating3 != null) btnRating3.setBackground(new Color(70, 70, 70));
         if (btnRating4 != null) btnRating4.setBackground(new Color(70, 70, 70));
         if (btnRating5 != null) btnRating5.setBackground(new Color(70, 70, 70));
         
-        // Marcar el botón seleccionado
         switch (rating) {
             case 1: if (btnRating1 != null) btnRating1.setBackground(new Color(102, 255, 102)); break;
             case 2: if (btnRating2 != null) btnRating2.setBackground(new Color(102, 255, 102)); break;
@@ -411,35 +387,27 @@ public class Reproductor extends javax.swing.JFrame {
         }
     }
     
-    /**
-     * Envía el comentario usando los componentes del JFrame
-     */
     private void enviarComentario() {
         if (cbCanciones == null || txtComentario == null) return;
         
         Song cancionSeleccionada = (Song) cbCanciones.getSelectedItem();
         String comentario = txtComentario.getText().trim();
         
-        // Validaciones básicas
         if (cancionSeleccionada == null || comentario.isEmpty() || ratingSeleccionado == 0) {
             return;
         }
         
-        // Agregar comentario
         boolean agregado = AñadirMusica.getPlayList().addComentario(cancionSeleccionada.getCodigo(), comentario, ratingSeleccionado);
         
         if (agregado) {
             txtComentario.setText("");
             ratingSeleccionado = 0;
-            seleccionarRating(0); // Resetear botones
+            seleccionarRating(0); 
             actualizarComentarios();
             cargarCanciones();
         }
     }
     
-    /**
-     * Actualiza la lista de comentarios para la canción seleccionada
-     */
     private void actualizarComentarios() {
         if (cbCanciones == null || listaComentarios == null) return;
         
